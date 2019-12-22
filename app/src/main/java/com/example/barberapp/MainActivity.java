@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -31,6 +32,9 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Method;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import static com.mapbox.mapboxsdk.style.layers.Property.ICON_ROTATION_ALIGNMENT_VIEWPORT;
 
 public class MainActivity extends AppCompatActivity {
@@ -39,13 +43,23 @@ public class MainActivity extends AppCompatActivity {
     private MapView mapview;
     private Button sendCoor;
 
+    @BindView(R.id.getSaloons)
+    Button getSaloons;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Mapbox.getInstance(this,"pk.eyJ1IjoiaG91YmVueiIsImEiOiJjazQxNXEydjgwODdjM3BuOXVhcmJwc3dnIn0.R5DLYf2mxoAf8uVJk4zo_A");
         setContentView(R.layout.activity_main);
-
+        ButterKnife.bind(this);
         sendCoor=findViewById(R.id.sendCoor);
+
+
+
+        getSaloons.setOnClickListener(view -> {
+            Intent intent=new Intent(getApplicationContext(),RegisterActivity.class);
+            startActivity(intent);
+        });
 
 
         mapview=findViewById(R.id.mapView);
