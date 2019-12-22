@@ -1,15 +1,34 @@
 package com.example.barberapp.models;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Saloon {
 
+    @SerializedName("id")
     private int id;
 
+    @SerializedName("name")
     private String name;
+
+    @SerializedName("description")
     private String description;
-    private double location_x,location_y;
+
+    @SerializedName("location_y")
+    private double location_y;
+
+    @SerializedName("location_x")
+    private double location_x;
+
+    @SerializedName("user_id")
     private int user_id;
+
+    @SerializedName("deleted_at")
     private String deleted_at;
+
+    @SerializedName("created_at")
     private String created_at;
+
+    @SerializedName("updated_at")
     private String updated_at;
 
     public Saloon(){

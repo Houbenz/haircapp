@@ -7,14 +7,14 @@ private String email;
 private String email_verified_at;
 private String password;
 private String role;
-private String profile_pic,remember_token,deleted_at,created_at,updated_at;
-
+private String profile_pic,deleted_at,created_at,updated_at;
+private boolean remember_token;
 
     public User() {
     }
 
     public User(int id, String email, String email_verified_at, String password, String role,
-                String profile_pic, String remember_token, String deleted_at, String created_at, String updated_at) {
+                String profile_pic, boolean remember_token, String deleted_at, String created_at, String updated_at) {
         this.id = id;
         this.email = email;
         this.email_verified_at = email_verified_at;
@@ -75,11 +75,11 @@ private String profile_pic,remember_token,deleted_at,created_at,updated_at;
         this.profile_pic = profile_pic;
     }
 
-    public String getRemember_token() {
+    public boolean getRemember_token() {
         return remember_token;
     }
 
-    public void setRemember_token(String remember_token) {
+    public void setRemember_token(boolean remember_token) {
         this.remember_token = remember_token;
     }
 

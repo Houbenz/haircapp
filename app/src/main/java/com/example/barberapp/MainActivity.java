@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         getSaloons.setOnClickListener(view -> {
-            Intent intent=new Intent(getApplicationContext(),RegisterActivity.class);
+            Intent intent=new Intent(getApplicationContext(),getSaloonsActivity.class);
             startActivity(intent);
         });
 
