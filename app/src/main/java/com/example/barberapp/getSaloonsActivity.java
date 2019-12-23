@@ -48,7 +48,7 @@ public class getSaloonsActivity extends AppCompatActivity {
 
 
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://192.168.43.210:8000/api/")
+                .baseUrl("http://192.168.43.211:8000/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
@@ -58,9 +58,9 @@ public class getSaloonsActivity extends AppCompatActivity {
 
         showOwnerButton.setOnClickListener(view -> {
 
-            Call<List<User>> callSaloons = service.listSaloons();
+            Call<List<User>> callOwners = service.listOwners();
 
-            callSaloons.enqueue(new Callback<List<User>>() {
+            callOwners.enqueue(new Callback<List<User>>() {
                 @Override
                 public void onResponse(Call<List<User>> call, Response<List<User>> response) {
 

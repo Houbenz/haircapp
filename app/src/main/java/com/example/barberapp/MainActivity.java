@@ -16,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.barberapp.retrofit.TakeRdvActivity;
 import com.mapbox.mapboxsdk.Mapbox;
 import com.mapbox.mapboxsdk.annotations.Icon;
 import com.mapbox.mapboxsdk.annotations.IconFactory;
@@ -34,6 +35,7 @@ import java.lang.reflect.Method;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static com.mapbox.mapboxsdk.style.layers.Property.ICON_ROTATION_ALIGNMENT_VIEWPORT;
 
@@ -45,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.getSaloons)
     Button getSaloons;
+
+    @BindView(R.id.registerButton)
+    Button register;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +64,13 @@ public class MainActivity extends AppCompatActivity {
         getSaloons.setOnClickListener(view -> {
             Intent intent=new Intent(getApplicationContext(),getSaloonsActivity.class);
             startActivity(intent);
+        });
+
+        register.setOnClickListener(view ->{
+
+            Intent intent=new Intent(getApplicationContext(),RegisterActivity.class);
+            startActivity(intent);
+
         });
 
 
@@ -119,6 +131,14 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
+
+
+    @OnClick(R.id.takeRdv)
+    public void openPriseRdv(){
+        Intent intent = new Intent(getApplicationContext(), TakeRdvActivity.class);
+        startActivity(intent);
+    }
+
 
     @Override
     protected void onResume() {

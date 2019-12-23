@@ -13,5 +13,5 @@ public interface GetSaloonsService {
 
 
     @GET("allSaloons")
-    Call<List<User>> listSaloons();
+    Call<List<User>> listOwners();
 }

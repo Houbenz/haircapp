@@ -7,13 +7,14 @@ private String email;
 private String email_verified_at;
 private String password;
 private String role;
+private String username;
 private String profile_pic,deleted_at,created_at,updated_at;
 private boolean remember_token;
-
+private String sex;
     public User() {
     }
 
-    public User(int id, String email, String email_verified_at, String password, String role,
+    public User(int id, String email,String username, String email_verified_at, String password, String role,
                 String profile_pic, boolean remember_token, String deleted_at, String created_at, String updated_at) {
         this.id = id;
         this.email = email;
@@ -25,6 +26,27 @@ private boolean remember_token;
         this.deleted_at = deleted_at;
         this.created_at = created_at;
         this.updated_at = updated_at;
+    }
+
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public boolean isRemember_token() {
+        return remember_token;
     }
 
     public int getId() {

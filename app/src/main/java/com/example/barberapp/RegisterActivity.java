@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.icu.text.UnicodeSetSpanner;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -15,7 +16,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.barberapp.models.Saloon;
 import com.example.barberapp.models.User;
-import com.example.barberapp.requests.SingletonRequestQueue;
+import com.example.barberapp.retrofit.RegisterService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -25,11 +26,14 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class RegisterActivity extends AppCompatActivity {
-
-
 
     @BindView(R.id.registerButton)
      Button register;
@@ -38,6 +42,15 @@ public class RegisterActivity extends AppCompatActivity {
 
     @BindView(R.id.usernameEdit)
     EditText username;
+
+    @BindView(R.id.emailEdit)
+    EditText emailEdit;
+
+    @BindView(R.id.passwordEdit)
+    EditText passwordEdit;
+
+    @BindView(R.id.roleEdit)
+    EditText roleEdit;
 
 
 
@@ -51,36 +64,55 @@ public class RegisterActivity extends AppCompatActivity {
         gson=builder.create();
 
 
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://192.168.1.65:8000/api/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+
+        RegisterService registerService = retrofit.create(RegisterService.class);
+
         register.setOnClickListener(view -> {
 
-            StringRequest stringRequest = new StringRequest(Request.Method.GET,
-                    "http://192.168.1.65:8000/api/register",
-                    response -> {
+            User user=new User();
+            user.setUsername(username.getText().toString());
+            user.setEmail(emailEdit.getText().toString());
+            user.setPassword(passwordEdit.getText().toString());
+            user.setRole(roleEdit.getText().toString());
 
-                    if(response != null && !response.equals("")){
-                        Toast.makeText(getApplicationContext(),"Client crée"+response,Toast.LENGTH_LONG).show();
-                    }
-            }, error -> {
+            Log.i("YIY",
+                    username.getText().toString() +
+                    " "+emailEdit.getText().toString()+
+                    " "+passwordEdit.getText().toString()+
+                    " "+roleEdit.getText().toString());
 
-                Toast.makeText(getApplicationContext(),"error : "+error,Toast.LENGTH_LONG).show();
-            }
-           ) {
+
+            Map<String,String> params = new HashMap<>();
+            params.put("username",user.getUsername());
+            params.put("email",user.getEmail());
+            params.put("password",user.getPassword());
+            params.put("role",user.getRole());
+            Call<String> sentUser =registerService.createUser(params);
+
+            sentUser.enqueue(new Callback<String>() {
                 @Override
-                protected Map<String, String> getParams() {
-                    Map<String,String> params=new HashMap<>();
-                    params.put("username","");
-                    params.put("email","");
-                    params.put("password","");
-                    params.put("role","");
-                    return params;
-                };
+                public void onResponse(Call<String> call, Response<String> response) {
 
-            };
+                    String us =response.body();
 
-            RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
-            requestQueue.add(stringRequest);
+                    if(us == null)
+                        Toast.makeText(getApplicationContext(),response.toString() ,Toast.LENGTH_LONG).show();
+                    else
+                        Toast.makeText(getApplicationContext(),us ,Toast.LENGTH_LONG).show();
+                }
 
-            // SingletonRequestQueue.getInstance(getApplicationContext()).addToRequestQueue(stringRequest);
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+
+                    call.cancel();
+                    t.printStackTrace();
+                }
+            });
         });
     }
 }
